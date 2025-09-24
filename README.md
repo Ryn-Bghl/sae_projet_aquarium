@@ -70,17 +70,19 @@ L’objectif est de mettre à disposition des étudiants GB un **outil numériqu
 ## 📂 Structure du dépôt (MVC PHP)
 
 ```
-📦 sae-aquarium
- ┣ 📂 app
- ┃ ┣ 📂 Controllers      # Contrôleurs (logique métier)
- ┃ ┣ 📂 Models           # Modèles (accès aux données / BDD)
- ┃ ┗ 📂 Views            # Vues (interfaces utilisateur)
- ┣ 📂 public              # Fichiers publics (index.php, CSS, JS, images)
- ┣ 📂 config              # Configurations (BDD, paramètres globaux)
- ┣ 📂 database            # Scripts SQL et structure BDD
- ┣ 📂 docs                # Cahier des charges, maquettes, rapports
- ┣ 📄 README.md           # Documentation du projet
- ┗ 📄 LICENSE             # Licence d’utilisation
+📦 sae_projet_aquarium
+┣ 📂 src                        # Code source principal
+┃ ┣ 📂 app                      # Application MVC
+┃ ┃ ┣ 📂 controller             # Contrôleurs (logique métier)
+┃ ┃ ┣ 📂 model                  # Modèles (accès aux données)
+┃ ┃ ┗ 📂 view                   # Vues (interfaces utilisateur)
+┃ ┃   ┗ 📂 common               # Composants communs (Layout, Header, Footer)
+┃ ┗ 📂 public                   # Fichiers publics (CSS, JS, images)
+┣ 📂 database                   # Scripts SQL et structure BDD
+┣ 📂 docs                       # Documentation du projet
+┃ ┗ 📂 livrables                # Documents livrables
+┣ 📄 README.md                  # Documentation principale
+┗ 📄 LICENCE                    # Licence d'utilisation
 ```
 
 ---
