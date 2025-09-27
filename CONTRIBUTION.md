@@ -5,8 +5,10 @@ Merci de votre intérêt pour contribuer à ce projet ! Pour garder le dépôt c
 ## 📌 Comment contribuer
 
 ### 1. Fork et clone
+
 1. Forkez ce dépôt sur votre compte GitHub.
 2. Clonez-le localement :
+
 ```bash
 git clone https://github.com/votre-utilisateur/sae-aquarium.git
 ````
