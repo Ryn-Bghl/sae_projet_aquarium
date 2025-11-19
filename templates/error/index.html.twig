@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page not found - 404
+{% endblock %}
+
+{% block body %}
+	<meta http-equiv="refresh" content="7;url=/"/>
+	<style>
+		.error-container {
+			min-height: 70vh;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+			color: #222;
+			padding: 2rem;
+			box-sizing: border-box;
+		}
+		.error-card {
+			max-width: 720px;
+			width: 100%;
+			text-align: center;
+			border-radius: 12px;
+			padding: 2.5rem;
+			box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+			background: #fff;
+		}
+		.error-code {
+			font-size: 3.5rem;
+			font-weight: 700;
+			color: #b00020;
+			margin: 0;
+		}
+		.error-title {
+			font-size: 1.25rem;
+			margin: 0.25rem 0 1rem;
+		}
+		.error-desc {
+			color: #555;
+			margin-bottom: 1.2rem;
+		}
+		.actions {
+			display: flex;
+			gap: 0.6rem;
+			justify-content: center;
+			margin-bottom: 0.8rem;
+		}
+		.btn {
+			display: inline-block;
+			padding: 0.6rem 1rem;
+			border-radius: 6px;
+			text-decoration: none;
+			color: #fff;
+		}
+		.btn-primary {
+			background: #b00020;
+		}
+		.btn-ghost {
+			background: #e9ecef;
+			color: #111;
+		}
+		.small {
+			font-size: 0.9rem;
+			color: #666;
+		}
+	</style>
+
+	<div class="error-container">
+		<div class="error-card">
+			<p class="error-code">404</p>
+			<p class="error-title">Oops — this page does not exist</p>
+			<p class="error-desc">The page you requested couldn't be found. It may have been moved or deleted.</p>
+
+			<div class="actions">
+				<a class="btn btn-primary" href="/">Go to homepage</a>
+				<a class="btn btn-ghost" href="javascript:history.back()">Go back</a>
+			</div>
+
+			<p class="small">You will be redirected to the homepage in
+				<span id="countdown">7</span>
+				seconds.</p>
+		</div>
+	</div>
+
+	<script>
+		(function () {
+var second = 7;
+var countdown = document.getElementById('countdown');
+if (! countdown) 
+return;
+
+
+
+var t = setInterval(function () {
+second -= 1;
+if (second <= 0) {
+clearInterval(t);
+return;
+}
+countdown.textContent = second;
+}, 1000);
+})();
+	</script>
+{% endblock %}
