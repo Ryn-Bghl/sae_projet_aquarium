@@ -1,10 +1,26 @@
-
 services:
+  
 ###> doctrine/doctrine-bundle ###
-  database:
+  
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: sae_projet_aquarium-phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
     ports:
-      - "5432"
-###< doctrine/doctrine-bundle ###
+      - "8081:80"
+    depends_on:
+      - mysql
+###<doctrine/doctrine-bundle ###
+
+  mysql:
+    container_name: sae_projet_aquarium-mailer-mysql
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./mysql_data:/var/lib/mysql
 
 ###> symfony/mailer ###
   mailer:
@@ -16,3 +32,4 @@ services:
       MP_SMTP_AUTH_ACCEPT_ANY: 1
       MP_SMTP_AUTH_ALLOW_INSECURE: 1
 ###< symfony/mailer ###
+
