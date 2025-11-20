@@ -69,7 +69,7 @@ L’objectif est de mettre à disposition des étudiants GB un **outil numériqu
 
 ## 📂 Structure du dépôt (Symfony)
 
-```
+``` bash
 📦 sae_projet_aquarium
 ┣ 📂 assets/                    # Fichiers frontend (JS, CSS, images)
 ┣ 📂 bin/                       # Scripts console (ex: bin/console)
