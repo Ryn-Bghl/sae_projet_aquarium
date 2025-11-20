@@ -54,10 +54,10 @@ L’objectif est de mettre à disposition des étudiants GB un **outil numériqu
 * **Gestion de projet** : planification, suivi, communication.
 * **Développement backend** :
 
-  * PHP (architecture MVC),
-  * CRUD (Create, Read, Update, Delete),
-  * Programmation orientée objets,
-  * Gestion et lecture de fichiers.
+  * Symfony (architecture MVC),
+  * Twig,
+  * Doctrine ORM,
+  * Webpack Encore / AssetMapper
 * **Développement frontend** :
 
   * HTML5, CSS3, JavaScript,
@@ -67,22 +67,27 @@ L’objectif est de mettre à disposition des étudiants GB un **outil numériqu
 
 ---
 
-## 📂 Structure du dépôt (MVC PHP)
+## 📂 Structure du dépôt (Symfony)
 
 ```
 📦 sae_projet_aquarium
-┣ 📂 src                        # Code source principal
-┃ ┣ 📂 app                      # Application MVC
-┃ ┃ ┣ 📂 controller             # Contrôleurs (logique métier)
-┃ ┃ ┣ 📂 model                  # Modèles (accès aux données)
-┃ ┃ ┗ 📂 view                   # Vues (interfaces utilisateur)
-┃ ┃   ┗ 📂 common               # Composants communs (Layout, Header, Footer)
-┃ ┗ 📂 public                   # Fichiers publics (CSS, JS, images)
-┣ 📂 database                   # Scripts SQL et structure BDD
-┣ 📂 docs                       # Documentation du projet
-┃ ┗ 📂 livrables                # Documents livrables
-┣ 📄 README.md                  # Documentation principale
-┗ 📄 LICENCE                    # Licence d'utilisation
+┣ 📂 assets/                    # Fichiers frontend (JS, CSS, images)
+┣ 📂 bin/                       # Scripts console (ex: bin/console)
+┣ 📂 config/                    # Fichiers de configuration
+┣ 📂 migrations/                # Migrations de base de données (Doctrine)
+┣ 📂 public/                    # Point d'entrée de l'application (index.php)
+┣ 📂 src/                       # Code source de l'application
+┃ ┣ 📂 Controller/              # Contrôleurs
+┃ ┣ 📂 Entity/                  # Entités Doctrine (objets de la BDD)
+┃ ┗ 📂 Repository/              # Logique de requêtes BDD
+┣ 📂 templates/                 # Templates Twig
+┣ 📂 tests/                     # Tests automatisés
+┣ 📂 translations/              # Fichiers de traduction
+┣ 📂 var/                       # Fichiers temporaires (cache, logs)
+┣ 📄 .env                       # Variables d'environnement
+┣ 📄 composer.json              # Dépendances PHP (Composer)
+┣ 📄 symfony.lock              # Gestion des dépendances Symfony
+┗ 📄 README.md                  # Ce fichier
 ```
 
 ---
