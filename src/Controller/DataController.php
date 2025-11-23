@@ -6,14 +6,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-final class HomeController extends AbstractController
+final class DataController extends AbstractController
 {
-    #[Route('/home', name: 'app_home')]
+    #[Route('/data', name: 'app_data')]
     public function index(): Response
     {
-        return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
-            "css_file_path" => "styles/home.css"
+        return $this->render('data/index.html.twig', [
+            'controller_name' => 'DataController',
+            'css_file_path' => 'styles/data.css'
         ]);
     }
 }
