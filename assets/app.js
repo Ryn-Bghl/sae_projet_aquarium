@@ -1,4 +1,4 @@
-import "./stimulus_bootstrap.js";
+// import "./stimulus_bootstrap.js";
 /*
  * Welcome to your app's main JavaScript file!
  *
@@ -8,3 +8,10 @@ import "./stimulus_bootstrap.js";
 import "./styles/global.css";
 
 console.log("This log comes from assets/app.js - welcome to AssetMapper! 🎉");
+
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./react/controllers/App.jsx";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
