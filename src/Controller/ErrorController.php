@@ -13,6 +13,7 @@ final class ErrorController extends AbstractController
     {
         return $this->render('error/index.html.twig', [
             'controller_name' => 'ErrorController',
+            'css_file_path' => 'styles/error.css'
         ]);
     }
 }

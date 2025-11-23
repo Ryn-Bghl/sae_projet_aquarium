@@ -1,0 +1,70 @@
+body {
+    background-color: hsl(60, 11%, 4%);
+}
+
+.error-container {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    color: hsl(0, 0%, 100%);
+    padding: 2rem;
+    box-sizing: border-box;
+}
+
+.error-card {
+    max-width: 720px;
+    width: 100%;
+    text-align: center;
+    border-radius: 12px;
+    padding: 2.5rem;
+    box-shadow: 0 8px 30px hsla(0, 0%, 0%, 0.12);
+    background: hsl(48, 7%, 15%);
+}
+
+.error-code {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: hsl(17, 97%, 47%);
+    margin: 0;
+}
+
+.error-title {
+    font-size: 1.25rem;
+    margin: 0.25rem 0 1rem;
+}
+
+.error-desc {
+    color: hsl(0, 0%, 55%);
+    margin-bottom: 1.2rem;
+}
+
+.actions {
+    display: flex;
+    gap: 0.6rem;
+    justify-content: center;
+    margin-bottom: 0.8rem;
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    text-decoration: none;
+    color: hsl(0, 0%, 100%);
+}
+
+.btn-primary {
+    background: hsl(17, 97%, 47%);
+}
+
+.btn-ghost {
+    background: hsl(210, 16%, 93%);
+    color: hsl(60, 11%, 4%);
+}
+
+.small {
+    font-size: 0.9rem;
+    color: hsl(0, 0%, 44%);
+}
