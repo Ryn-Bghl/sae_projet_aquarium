@@ -36,6 +36,10 @@ class Aquarium
     #[ORM\OneToMany(targetEntity: Data::class, mappedBy: 'aquarium', orphanRemoval: true)]
     private Collection $data;
 
+    #[ORM\ManyToOne(inversedBy: 'aquariums')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
     public function __construct()
     {
         $this->fishes = new ArrayCollection();
@@ -139,6 +143,18 @@ class Aquarium
                 $data->setAquarium(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

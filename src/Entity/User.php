@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -30,6 +32,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    /**
+     * @var Collection<int, Aquarium>
+     */
+    #[ORM\OneToMany(targetEntity: Aquarium::class, mappedBy: 'user', orphanRemoval: true)]
+    private Collection $aquariums;
+
+    /**
+     * @var Collection<int, Setting>
+     */
+    #[ORM\OneToMany(targetEntity: Setting::class, mappedBy: 'user', orphanRemoval: true)]
+    private Collection $settings;
+
+    public function __construct()
+    {
+        $this->aquariums = new ArrayCollection();
+        $this->settings = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -110,5 +130,65 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function eraseCredentials(): void
     {
         // @deprecated, to be removed when upgrading to Symfony 8
+    }
+
+    /**
+     * @return Collection<int, Aquarium>
+     */
+    public function getAquariums(): Collection
+    {
+        return $this->aquariums;
+    }
+
+    public function addAquarium(Aquarium $aquarium): static
+    {
+        if (!$this->aquariums->contains($aquarium)) {
+            $this->aquariums->add($aquarium);
+            $aquarium->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAquarium(Aquarium $aquarium): static
+    {
+        if ($this->aquariums->removeElement($aquarium)) {
+            // set the owning side to null (unless already changed)
+            if ($aquarium->getUser() === $this) {
+                $aquarium->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Setting>
+     */
+    public function getSettings(): Collection
+    {
+        return $this->settings;
+    }
+
+    public function addSetting(Setting $setting): static
+    {
+        if (!$this->settings->contains($setting)) {
+            $this->settings->add($setting);
+            $setting->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSetting(Setting $setting): static
+    {
+        if ($this->settings->removeElement($setting)) {
+            // set the owning side to null (unless already changed)
+            if ($setting->getUser() === $this) {
+                $setting->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }
