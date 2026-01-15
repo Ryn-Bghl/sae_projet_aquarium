@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Fish{% endblock %}
+
+{% block body %}
+    <h1>Create new Fish</h1>
+
+    {{ include('fish/_form.html.twig') }}
+
+    <a href="{{ path('app_fish_index') }}">back to list</a>
+{% endblock %}

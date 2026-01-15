@@ -1,37 +1,35 @@
 <!DOCTYPE html>
 <html lang="fr">
-	<head>
-		<meta charset="UTF-8">
-		<title>Page not found - 404</title>
-		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-		<link rel="stylesheet" href="{{ asset('styles/global.css') }}">
-		<link rel="stylesheet" href="{{ asset(css_file_path) }}">
-	</head>
-	<body>
-		<div class="error-container">
-			<div class="error-card">
-				<p class="error-code">404</p>
-				<p class="error-title">Oops — this page does not exist</p>
-				<p class="error-desc">The page you requested couldn't be found. It may have been moved or deleted.</p>
+    <head>
+        <meta charset="UTF-8">
+        <title>Page not found - 404</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        <link rel="stylesheet" href="{{ asset('styles/global.css') }}">
+        <link rel="stylesheet" href="{{ asset(css_file_path) }}">
+    </head>
+    <body>
+        <div class="error-container">
+            <div class="error-card">
+                <p class="error-code">404</p>
+                <p class="error-title">Oops — this page does not exist</p>
+                <p class="error-desc">The page you requested couldn't be found. It may have been moved or deleted.</p>
 
-				<div class="actions">
-					<a class="btn btn-primary" href="/">Go to homepage</a>
-					<a class="btn btn-ghost" href="javascript:history.back()">Go back</a>
-				</div>
+                <div class="actions">
+                    <a class="btn btn-primary" href="/">Go to homepage</a>
+                    <a class="btn btn-ghost" href="javascript:history.back()">Go back</a>
+                </div>
 
-				<p class="small">You will be redirected to the homepage in
-					<span id="countdown">7</span>
-					seconds.</p>
-			</div>
-		</div>
-		<script>
-			(function () {
+                <p class="small">You will be redirected to the homepage in
+                    <span id="countdown">7</span>
+                    seconds.</p>
+            </div>
+        </div>
+        <script>
+            (function () {
 var second = 7;
 var countdown = document.getElementById('countdown');
-if (! countdown) 
+if (! countdown)
 return;
-
-
 
 var t = setInterval(function () {
 second -= 1;
@@ -43,6 +41,6 @@ return;
 countdown.textContent = second;
 }, 1000);
 })();
-		</script>
-	</body>
+        </script>
+    </body>
 </html>

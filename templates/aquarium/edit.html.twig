@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Aquarium{% endblock %}
+
+{% block body %}
+    <h1>Edit Aquarium</h1>
+
+    {{ include('aquarium/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_aquarium_index') }}">back to list</a>
+
+    {{ include('aquarium/_delete_form.html.twig') }}
+{% endblock %}
