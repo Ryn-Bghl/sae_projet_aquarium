@@ -13,11 +13,8 @@ class Setting
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $code = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $value = null;
+    #[ORM\Column(type: 'json')]
+    private array $settings = ['theme' => 'light'];
 
     #[ORM\ManyToOne(inversedBy: 'settings')]
     #[ORM\JoinColumn(nullable: false)]
@@ -28,26 +25,14 @@ class Setting
         return $this->id;
     }
 
-    public function getCode(): ?string
+    public function getSettings(): array
     {
-        return $this->code;
+        return $this->settings;
     }
 
-    public function setCode(string $code): static
+    public function setSettings(array $settings): static
     {
-        $this->code = $code;
-
-        return $this;
-    }
-
-    public function getValue(): ?string
-    {
-        return $this->value;
-    }
-
-    public function setValue(string $value): static
-    {
-        $this->value = $value;
+        $this->settings = $settings;
 
         return $this;
     }
