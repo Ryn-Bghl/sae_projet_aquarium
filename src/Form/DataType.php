@@ -14,15 +14,21 @@ class DataType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('type')
-            ->add('value')
             ->add('createdAt', null, [
                 'widget' => 'single_text'
             ])
-            ->add('aquarium', EntityType::class, [
+            ->add('aquarium', EntityType::class,  [
                 'class' => Aquarium::class,
-                'choice_label' => 'id',
+                'choice_label' => 'name',
             ])
+            ->add('temp')
+            ->add('ph')
+            ->add('kh')
+            ->add('gh')
+            ->add('no2')
+            ->add('no3')
+            ->add('cl2')
+            ->add('observation')
         ;
     }
 

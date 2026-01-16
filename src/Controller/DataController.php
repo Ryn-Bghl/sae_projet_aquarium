@@ -18,7 +18,7 @@ final class DataController extends AbstractController
     public function index(DataRepository $dataRepository): Response
     {
         return $this->render('data/index.html.twig', [
-            'data' => $dataRepository->findAll(),
+            'datas' => $dataRepository->findAll(),
             'css_file_path' => 'styles/global.css',
         ]);
     }

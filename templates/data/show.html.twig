@@ -1,34 +1,70 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Data{% endblock %}
+{% block title %}Détails de la Saisie
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('styles/forms.css') }}">
+{% endblock %}
 
 {% block body %}
-    <h1>Data</h1>
+	<div class="form-container">
+		<h1 class="form-title">Détails de la Saisie #{{ data.id }}</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ data.id }}</td>
-            </tr>
-            <tr>
-                <th>Type</th>
-                <td>{{ data.type }}</td>
-            </tr>
-            <tr>
-                <th>Value</th>
-                <td>{{ data.value }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ data.createdAt ? data.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+		<table class="table" style="width: 100%; margin-bottom: 2rem; border-collapse: collapse; color: var(--cls-white);">
+			<tbody>
+				<tr>
+					<th style="text-align: left; padding: 1rem; border-bottom: 1px solid #444; color: var(--cls-green);">Date</th>
+					<td style="padding: 1rem; border-bottom: 1px solid #444;">{{ data.createdAt|date('d/m/Y H:i') }}</td>
+				</tr>
+				<tr>
+					<th style="text-align: left; padding: 1rem; border-bottom: 1px solid #444; color: var(--cls-green);">Aquarium</th>
+					<td style="padding: 1rem; border-bottom: 1px solid #444;">{{ data.aquarium.name }}</td>
+				</tr>
+				<tr>
+					<th style="text-align: left; padding: 1rem; border-bottom: 1px solid #444; color: var(--cls-green);">Température</th>
+					<td style="padding: 1rem; border-bottom: 1px solid #444;">{{ data.temp }}
+						°C</td>
+				</tr>
+				<tr>
+					<th style="text-align: left; padding: 1rem; border-bottom: 1px solid #444; color: var(--cls-green);">pH</th>
+					<td style="padding: 1rem; border-bottom: 1px solid #444;">{{ data.ph }}</td>
+				</tr>
+				<tr>
+					<th style="text-align: left; padding: 1rem; border-bottom: 1px solid #444; color: var(--cls-green);">KH</th>
+					<td style="padding: 1rem; border-bottom: 1px solid #444;">{{ data.kh }}</td>
+				</tr>
+				<tr>
+					<th style="text-align: left; padding: 1rem; border-bottom: 1px solid #444; color: var(--cls-green);">GH</th>
+					<td style="padding: 1rem; border-bottom: 1px solid #444;">{{ data.gh }}</td>
+				</tr>
+				<tr>
+					<th style="text-align: left; padding: 1rem; border-bottom: 1px solid #444; color: var(--cls-green);">Cl2</th>
+					<td style="padding: 1rem; border-bottom: 1px solid #444;">{{ data.cl2 }}</td>
+				</tr>
+				<tr>
+					<th style="text-align: left; padding: 1rem; border-bottom: 1px solid #444; color: var(--cls-green);">NO2</th>
+					<td style="padding: 1rem; border-bottom: 1px solid #444;">{{ data.no2 }}</td>
+				</tr>
+				<tr>
+					<th style="text-align: left; padding: 1rem; border-bottom: 1px solid #444; color: var(--cls-green);">NO3</th>
+					<td style="padding: 1rem; border-bottom: 1px solid #444;">{{ data.no3 }}</td>
+				</tr>
+				<tr>
+					<th style="text-align: left; padding: 1rem; border-bottom: 1px solid #444; color: var(--cls-green);">Observation</th>
+					<td style="padding: 1rem; border-bottom: 1px solid #444;">{{ data.observation }}</td>
+				</tr>
+			</tbody>
+		</table>
 
-    <a href="{{ path('app_data_index') }}">back to list</a>
+		<div class="form-actions" style="display: flex; justify-content: space-between; align-items: center; margin-top: 2rem;">
+			<a href="{{ path('app_data_index') }}" class="btn-link">Retour à la liste</a>
 
-    <a href="{{ path('app_data_edit', {'id': data.id}) }}">edit</a>
-
-    {{ include('data/_delete_form.html.twig') }}
+			<div style="display: flex; gap: 1rem; align-items: center;">
+				<a href="{{ path('app_data_edit', {'id': data.id}) }}" class="btn-primary" style="text-decoration: none;">Modifier</a>
+				{{ include('data/_delete_form.html.twig') }}
+			</div>
+		</div>
+	</div>
 {% endblock %}

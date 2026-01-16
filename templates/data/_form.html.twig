@@ -1,4 +1,20 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="form-container">
+    {{ form_start(form) }}
+        <div class="form-grid">
+            {{ form_row(form.temp) }}
+            {{ form_row(form.ph) }}
+            {{ form_row(form.kh) }}
+            {{ form_row(form.gh) }}
+            {{ form_row(form.no2) }}
+            {{ form_row(form.no3) }}
+            {{ form_row(form.cl2) }}
+        </div>
+        {{ form_row(form.observation) }}
+        {{ form_row(form.createdAt) }}
+        {{ form_row(form.aquarium) }}
+        
+        <div class="form-actions">
+            <button class="btn-primary">{{ button_label|default('Enregistrer') }}</button>
+        </div>
+    {{ form_end(form) }}
+</div>

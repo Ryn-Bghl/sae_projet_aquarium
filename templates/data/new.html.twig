@@ -1,11 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Data{% endblock %}
+{% block title %}Nouvelle Saisie
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/forms.css') }}">
+{% endblock %}
 
 {% block body %}
-    <h1>Create new Data</h1>
+	<h1 class="form-title">Créer une nouvelle saisie</h1>
 
-    {{ include('data/_form.html.twig') }}
+	{{ include('data/_form.html.twig') }}
 
-    <a href="{{ path('app_data_index') }}">back to list</a>
+	<div style="margin-top: 1rem; text-align: center;">
+        <a href="{{ path('app_data_index') }}" class="btn-link">Retour à la liste</a>
+    </div>
 {% endblock %}

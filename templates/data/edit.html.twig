@@ -1,13 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Data{% endblock %}
+{% block title %}Modifier la Saisie
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/forms.css') }}">
+{% endblock %}
 
 {% block body %}
-    <h1>Edit Data</h1>
+	<h1 class="form-title">Modifier la saisie</h1>
 
-    {{ include('data/_form.html.twig', {'button_label': 'Update'}) }}
+	{{ include('data/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 
-    <a href="{{ path('app_data_index') }}">back to list</a>
-
-    {{ include('data/_delete_form.html.twig') }}
+	<div style="margin-top: 1rem; display: flex; justify-content: center; gap: 2rem; align-items: center;">
+        <a href="{{ path('app_data_index') }}" class="btn-link">Retour à la liste</a>
+        {{ include('data/_delete_form.html.twig') }}
+    </div>
 {% endblock %}

@@ -1,39 +1,58 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Data index{% endblock %}
+{% block title %}Index des Saisies
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('styles/forms.css') }}">
+	<link rel="stylesheet" href="{{ asset('styles/dashboard.css') }}">
+{% endblock %}
 
 {% block body %}
-    <h1>Data index</h1>
+	<h1 class="form-title">Historique des Saisies</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Type</th>
-                <th>Value</th>
-                <th>CreatedAt</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for data in data %}
-            <tr>
-                <td>{{ data.id }}</td>
-                <td>{{ data.type }}</td>
-                <td>{{ data.value }}</td>
-                <td>{{ data.createdAt ? data.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_data_show', {'id': data.id}) }}">show</a>
-                    <a href="{{ path('app_data_edit', {'id': data.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+	<div style="margin-bottom: 2rem; display: flex; justify-content: flex-end;">
+		<a href="{{ path('app_data_new') }}" class="btn-primary">Nouvelle Saisie</a>
+	</div>
 
-    <a href="{{ path('app_data_new') }}">Create new</a>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Date</th>
+				<th>Aquarium</th>
+				<th>Temp (°C)</th>
+				<th>pH</th>
+				<th>KH</th>
+				<th>GH</th>
+				<th>Cl2</th>
+				<th>NO2</th>
+				<th>NO3</th>
+				<th>Observation</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for data in datas %}
+				<tr>
+					<td>{{ data.id }}</td>
+					<td>{{ data.createdAt|date('d/m/Y H:i') }}</td>
+					<td>{{ data.aquarium.name }}</td>
+					<td>{{ data.temp }}</td>
+					<td>{{ data.ph }}</td>
+					<td>{{ data.kh }}</td>
+					<td>{{ data.gh }}</td>
+					<td>{{ data.cl2 }}</td>
+					<td>{{ data.no2 }}</td>
+					<td>{{ data.no3 }}</td>
+					<td>{{ data.observation|u.truncate(20, '...') }}</td>
+					<td>
+						<a href="{{ path('app_data_show', {'id': data.id}) }}" class="btn-link">Voir</a>
+						<a href="{{ path('app_data_edit', {'id': data.id}) }}" class="btn-link">Editer</a>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 {% endblock %}

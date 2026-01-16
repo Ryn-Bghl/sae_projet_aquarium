@@ -1,0 +1,126 @@
+.form-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: var(--cls-black-1);
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--cls-green);
+}
+
+.form-title {
+    color: var(--cls-green);
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    text-align: center;
+}
+
+/* Target Symfony form rows */
+.form-container form > div {
+    margin-bottom: 1.5rem;
+}
+
+.form-container label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--cls-green);
+    font-weight: 500;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-container input,
+.form-container select,
+.form-container textarea {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: var(--cls-black);
+    border: 1px solid #333;
+    border-radius: 6px;
+    color: var(--cls-white);
+    transition: all 0.3s ease;
+}
+
+.form-container input:focus,
+.form-container select:focus,
+.form-container textarea:focus {
+    outline: none;
+    border-color: var(--cls-green);
+    background-color: #1a1a17;
+    box-shadow: 0 0 0 3px rgba(162, 181, 117, 0.15);
+}
+
+.form-actions {
+    margin-top: 2.5rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-primary {
+    background-color: var(--cls-green);
+    color: var(--cls-black);
+    padding: 0.8rem 2.5rem;
+    border: none;
+    border-radius: 6px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-primary:hover {
+    background-color: hsl(78, 18%, 75%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-link {
+    color: var(--cls-green);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.btn-danger {
+    background-color: var(--cls-red);
+    color: var(--cls-white);
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-danger:hover {
+    filter: brightness(1.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Grid layout for numeric data */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Ensure grid items don't have the default margin-bottom from the parent rule */
+.form-grid > div {
+    margin-bottom: 0 !important;
+}
+
+/* Styling for specific types */
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
