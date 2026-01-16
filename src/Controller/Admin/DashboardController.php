@@ -2,10 +2,16 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Aquarium;
+use App\Entity\Data;
+use App\Entity\Fish;
+use App\Entity\Setting;
+use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\HttpFoundation\Response;
 
 #[AdminDashboard(routePath: '/admin', routeName: 'admin')]
@@ -13,7 +19,10 @@ class DashboardController extends AbstractDashboardController
 {
     public function index(): Response
     {
-        return parent::index();
+        $routeBuilder = $this->container->get(AdminUrlGenerator::class);
+        $url = $routeBuilder->setController(AquariumCrudController::class)->generateUrl();
+
+        return $this->redirect($url);
 
         // Option 1. You can make your dashboard redirect to some common page of your backend
         //
@@ -44,7 +53,12 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+        yield MenuItem::linkToUrl('Back to the website', 'fas fa-home', '/');
+        yield MenuItem::linkToCrud('Users', 'fas fa-user', User::class);
+        yield MenuItem::linkToCrud('Settings', 'fas fa-cogs', Setting::class);
+        yield MenuItem::linkToCrud('Fish', 'fas fa-fish', Fish::class);
+        yield MenuItem::linkToCrud('Aquariums', 'fas fa-water', Aquarium::class);
+        yield MenuItem::linkToCrud('Data', 'fas fa-chart-bar', Data::class);
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
     }
 }

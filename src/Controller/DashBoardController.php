@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-final class DashBoardController extends AbstractController
+final class DashboardController extends AbstractController
 {
     #[Route('/', name: 'app_dashboard')]
     public function index(AquariumRepository $aquariumRepository, UserRepository $userRepository, DataRepository $dataRepository, FishRepository $fishRepository, SettingRepository $setting): Response
