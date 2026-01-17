@@ -86,12 +86,10 @@ class AppFixtures extends Fixture
                 $manager->persist($fish);
             }
 
-            // Create Data History (last 60 days)
+            // Create Data History (last 7 days)
             $params = $tankData['params'];
-            for ($i = 60; $i >= 0; $i--) { 
-                // Generate a measurement every 1 to 3 days
-                if (rand(1, 10) > 7 && $i != 0) continue; 
-
+            for ($i = 7; $i >= 0; $i--) { 
+                // Generate a measurement every day
                 $data = new Data();
                 $data->setAquarium($aquarium);
                 

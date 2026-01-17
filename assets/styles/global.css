@@ -1,20 +1,20 @@
 :root {
-    /* Colors from Figma Palette */
-    --color-bg-primary: #100C0B;   /* Smoky Black */
-    --color-bg-secondary: #171614; /* Night */
-    --color-bg-tertiary: #1C1B17;  /* Eerie Black */
+    /* Refined Figma Palette - More harmonious & Accessible */
+    --color-bg-primary: #0D0C0B;   /* Deeper Smoky Black */
+    --color-bg-secondary: #141312; /* Slightly warmer Night */
+    --color-bg-tertiary: #1C1B19;  /* Balanced Eerie Black */
     
-    --color-text-primary: #FFFFFF;
-    --color-text-secondary: #99A57D; /* Moss */
-    --color-text-muted: #282723;     /* Eerie Light */
+    --color-text-primary: #F5F5F3;   /* Off-white for better readability on dark */
+    --color-text-secondary: #A7B28B; /* Brightened Moss for accessibility */
+    --color-text-muted: #6B6863;     /* Visible but subtle muted text */
 
-    --color-accent: #EB4604;       /* Hot Orange */
-    --color-accent-hover: #F77E0D; /* Orange Wheel */
-    --color-danger: #cf6679;
-    --color-success: #99A57D;      /* Moss */
-    --color-warning: #F77E0D;
+    --color-accent: #F0541E;       /* Vibrantly accessible Hot Orange */
+    --color-accent-hover: #FF7043; /* Softer hover orange */
+    --color-danger: #E57373;
+    --color-success: #81C784;
+    --color-warning: #FFB74D;
 
-    --border-color: #282723;       /* Eerie Light */
+    --border-color: #2D2C2A;       /* Softer border for depth */
     
     /* Spacing */
     --spacing-xs: 0.25rem;
@@ -205,29 +205,41 @@ tr:hover {
     font-weight: 500;
     cursor: pointer;
     border: none;
-    transition: background-color 0.2s, transform 0.1s;
+    transition: all 0.2s ease;
     font-size: var(--font-size-sm);
-    text-decoration: none;
+    text-decoration: none !important;
+    color: var(--color-text-primary);
 }
 
 .btn-primary {
     background-color: var(--color-accent);
-    color: var(--color-bg-primary);
+    color: var(--color-bg-primary) !important;
 }
 
 .btn-primary:hover {
     background-color: var(--color-accent-hover);
-    text-decoration: none;
-}
-
-.btn-danger {
-    background-color: var(--color-danger);
-    color: white;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
 }
 
 .btn-secondary {
     background-color: var(--color-bg-tertiary);
-    color: var(--color-text-primary);
+    color: var(--color-text-primary) !important;
+}
+
+.btn-secondary:hover {
+    background-color: var(--border-color);
+    transform: translateY(-2px);
+}
+
+.btn-danger {
+    background-color: var(--color-danger);
+    color: white !important;
+}
+
+.btn-danger:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
 }
 
 /* Forms */
