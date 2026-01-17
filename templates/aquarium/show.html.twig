@@ -1,34 +1,55 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Aquarium{% endblock %}
+{% block title %}Aquarium : {{ aquarium.name }}{% endblock %}
 
 {% block body %}
-    <h1>Aquarium</h1>
+    <div class="d-flex justify-between align-center mb-4">
+        <h1>{{ aquarium.name }}</h1>
+        <div class="gap-2 d-flex">
+            <a href="{{ path('app_aquarium_edit', {'id': aquarium.id}) }}" class="btn btn-primary">Modifier</a>
+            <a href="{{ path('app_aquarium_index') }}" class="btn btn-secondary">Retour à la liste</a>
+        </div>
+    </div>
 
-    <table class="table">
-        <tbody>
+    <div class="card mb-4">
+        <h3>Informations Générales</h3>
+        <table class="table-borderless">
             <tr>
-                <th>Id</th>
-                <td>{{ aquarium.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ aquarium.name }}</td>
-            </tr>
-            <tr>
-                <th>Capacity</th>
-                <td>{{ aquarium.capacity }}</td>
+                <th>Capacité</th>
+                <td>{{ aquarium.capacity }} Litres</td>
             </tr>
             <tr>
                 <th>Type</th>
                 <td>{{ aquarium.type }}</td>
             </tr>
-        </tbody>
-    </table>
+        </table>
+    </div>
 
-    <a href="{{ path('app_aquarium_index') }}">back to list</a>
-
-    <a href="{{ path('app_aquarium_edit', {'id': aquarium.id}) }}">edit</a>
-
-    {{ include('aquarium/_delete_form.html.twig') }}
+    <div class="card">
+        <h3>Poissons dans cet aquarium</h3>
+        <div class="table-container" style="box-shadow: none; padding: 0;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for fish in aquarium.fishes %}
+                    <tr>
+                        <td>{{ fish.name }}</td>
+                        <td>
+                            <a href="{{ path('app_fish_show', {'id': fish.id}) }}" class="btn btn-secondary" style="padding: 2px 8px; font-size: 0.8rem;">Voir</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="2" class="text-center">Aucun poisson dans cet aquarium.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}

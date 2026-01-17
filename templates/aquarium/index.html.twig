@@ -1,39 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Aquarium index{% endblock %}
+{% block title %}Mes Aquariums{% endblock %}
 
 {% block body %}
-    <h1>Aquarium index</h1>
+    <div class="d-flex justify-between align-center mb-4">
+        <h1>Mes Aquariums</h1>
+        <a href="{{ path('app_aquarium_new') }}" class="btn btn-primary">Ajouter un aquarium</a>
+    </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Capacity</th>
-                <th>Type</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for aquarium in aquaria %}
-            <tr>
-                <td>{{ aquarium.id }}</td>
-                <td>{{ aquarium.name }}</td>
-                <td>{{ aquarium.capacity }}</td>
-                <td>{{ aquarium.type }}</td>
-                <td>
-                    <a href="{{ path('app_aquarium_show', {'id': aquarium.id}) }}">show</a>
-                    <a href="{{ path('app_aquarium_edit', {'id': aquarium.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_aquarium_new') }}">Create new</a>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Capacité (L)</th>
+                    <th>Type</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for aquarium in aquariums %}
+                <tr>
+                    <td>{{ aquarium.name }}</td>
+                    <td>{{ aquarium.capacity }}</td>
+                    <td>{{ aquarium.type }}</td>
+                    <td>
+                        <a href="{{ path('app_aquarium_show', {'id': aquarium.id}) }}" class="btn btn-secondary">Voir</a>
+                        <a href="{{ path('app_aquarium_edit', {'id': aquarium.id}) }}" class="btn btn-secondary">Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4" class="text-center">Aucun aquarium trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

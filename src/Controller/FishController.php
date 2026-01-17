@@ -12,11 +12,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/fish')]
-final class FishController extends AbstractController
+final class FishController extends BaseController
 {
     #[Route(name: 'app_fish_index', methods: ['GET'])]
-    public function index(FishRepository $fishRepository): Response
+    public function index(FishRepository $fishRepository, \App\Repository\UserRepository $userRepository, \Doctrine\ORM\EntityManagerInterface $em, \Symfony\Bundle\SecurityBundle\Security $security): Response
     {
+        $this->ensureGuest($userRepository, $em, $security);
+        
         return $this->render('fish/index.html.twig', [
             'fish' => $fishRepository->findAll(),
             'css_file_path' => 'styles/global.css',
@@ -27,7 +29,9 @@ final class FishController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $fish = new Fish();
-        $form = $this->createForm(FishType::class, $fish);
+        $form = $this->createForm(FishType::class, $fish, [
+            'user' => $this->getUser(),
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -54,7 +58,9 @@ final class FishController extends AbstractController
     #[Route('/{id}/edit', name: 'app_fish_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Fish $fish, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(FishType::class, $fish);
+        $form = $this->createForm(FishType::class, $fish, [
+            'user' => $this->getUser(),
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

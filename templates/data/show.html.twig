@@ -1,70 +1,53 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Détails de la Saisie
-{% endblock %}
-
-{% block stylesheets %}
-	{{ parent() }}
-	<link rel="stylesheet" href="{{ asset('styles/forms.css') }}">
-{% endblock %}
+{% block title %}Détails de la Mesure{% endblock %}
 
 {% block body %}
-	<div class="form-container">
-		<h1 class="form-title">Détails de la Saisie #{{ data.id }}</h1>
+    <div class="d-flex justify-between align-center mb-4">
+        <h1>Mesure du {{ data.createdAt|date('d/m/Y H:i') }}</h1>
+        <div class="gap-2 d-flex">
+            <a href="{{ path('app_data_edit', {'id': data.id}) }}" class="btn btn-primary">Modifier</a>
+            <a href="{{ path('app_data_index') }}" class="btn btn-secondary">Retour à la liste</a>
+        </div>
+    </div>
 
-		<table class="table" style="width: 100%; margin-bottom: 2rem; border-collapse: collapse; color: var(--cls-white);">
-			<tbody>
-				<tr>
-					<th style="text-align: left; padding: 1rem; border-bottom: 1px solid #444; color: var(--cls-green);">Date</th>
-					<td style="padding: 1rem; border-bottom: 1px solid #444;">{{ data.createdAt|date('d/m/Y H:i') }}</td>
-				</tr>
-				<tr>
-					<th style="text-align: left; padding: 1rem; border-bottom: 1px solid #444; color: var(--cls-green);">Aquarium</th>
-					<td style="padding: 1rem; border-bottom: 1px solid #444;">{{ data.aquarium.name }}</td>
-				</tr>
-				<tr>
-					<th style="text-align: left; padding: 1rem; border-bottom: 1px solid #444; color: var(--cls-green);">Température</th>
-					<td style="padding: 1rem; border-bottom: 1px solid #444;">{{ data.temp }}
-						°C</td>
-				</tr>
-				<tr>
-					<th style="text-align: left; padding: 1rem; border-bottom: 1px solid #444; color: var(--cls-green);">pH</th>
-					<td style="padding: 1rem; border-bottom: 1px solid #444;">{{ data.ph }}</td>
-				</tr>
-				<tr>
-					<th style="text-align: left; padding: 1rem; border-bottom: 1px solid #444; color: var(--cls-green);">KH</th>
-					<td style="padding: 1rem; border-bottom: 1px solid #444;">{{ data.kh }}</td>
-				</tr>
-				<tr>
-					<th style="text-align: left; padding: 1rem; border-bottom: 1px solid #444; color: var(--cls-green);">GH</th>
-					<td style="padding: 1rem; border-bottom: 1px solid #444;">{{ data.gh }}</td>
-				</tr>
-				<tr>
-					<th style="text-align: left; padding: 1rem; border-bottom: 1px solid #444; color: var(--cls-green);">Cl2</th>
-					<td style="padding: 1rem; border-bottom: 1px solid #444;">{{ data.cl2 }}</td>
-				</tr>
-				<tr>
-					<th style="text-align: left; padding: 1rem; border-bottom: 1px solid #444; color: var(--cls-green);">NO2</th>
-					<td style="padding: 1rem; border-bottom: 1px solid #444;">{{ data.no2 }}</td>
-				</tr>
-				<tr>
-					<th style="text-align: left; padding: 1rem; border-bottom: 1px solid #444; color: var(--cls-green);">NO3</th>
-					<td style="padding: 1rem; border-bottom: 1px solid #444;">{{ data.no3 }}</td>
-				</tr>
-				<tr>
-					<th style="text-align: left; padding: 1rem; border-bottom: 1px solid #444; color: var(--cls-green);">Observation</th>
-					<td style="padding: 1rem; border-bottom: 1px solid #444;">{{ data.observation }}</td>
-				</tr>
-			</tbody>
-		</table>
+    <div class="card-grid">
+        <div class="card">
+            <h3>Paramètres Physiques</h3>
+            <div class="value">{{ data.temp }}°C</div>
+            <div class="text-muted">Température</div>
+        </div>
+        <div class="card">
+            <h3>Acidité</h3>
+            <div class="value">{{ data.ph }}</div>
+            <div class="text-muted">pH</div>
+        </div>
+    </div>
 
-		<div class="form-actions" style="display: flex; justify-content: space-between; align-items: center; margin-top: 2rem;">
-			<a href="{{ path('app_data_index') }}" class="btn-link">Retour à la liste</a>
+    <div class="card mb-4">
+        <h3>Détails Chimiques</h3>
+        <div class="table-container" style="box-shadow: none; padding: 0;">
+            <table>
+                <tr>
+                    <th>KH</th><td>{{ data.kh }} °d</td>
+                    <th>GH</th><td>{{ data.gh }} °d</td>
+                </tr>
+                <tr>
+                    <th>CL2</th><td>{{ data.cl2 }} mg/L</td>
+                    <th>NO2</th><td>{{ data.no2 }} mg/L</td>
+                </tr>
+                <tr>
+                    <th>NO3</th><td>{{ data.no3 }} mg/L</td>
+                    <th>Aquarium</th><td>{{ data.aquarium.name }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
 
-			<div style="display: flex; gap: 1rem; align-items: center;">
-				<a href="{{ path('app_data_edit', {'id': data.id}) }}" class="btn-primary" style="text-decoration: none;">Modifier</a>
-				{{ include('data/_delete_form.html.twig') }}
-			</div>
-		</div>
-	</div>
+    {% if data.observation %}
+    <div class="card">
+        <h3>Observations</h3>
+        <p>{{ data.observation }}</p>
+    </div>
+    {% endif %}
 {% endblock %}

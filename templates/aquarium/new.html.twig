@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Aquarium{% endblock %}
+{% block title %}Nouvel Aquarium{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/forms.css') }}">
+{% endblock %}
 
 {% block body %}
-    <h1>Create new Aquarium</h1>
-
+    <h1>Ajouter un Aquarium</h1>
     {{ include('aquarium/_form.html.twig') }}
-
-    <a href="{{ path('app_aquarium_index') }}">back to list</a>
 {% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion - AquaTrack{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/forms.css') }}">
+    <style>
+        .login-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 80vh;
+        }
+        .login-card {
+            width: 100%;
+            max-width: 400px;
+        }
+    </style>
+{% endblock %}
+
+{# Override body to remove sidebar for login page #}
+{% block body %}
+<div class="login-container">
+    <div class="card login-card">
+        <form method="post">
+            {% if error %}
+                <div class="alert alert-danger" style="color: var(--color-danger); margin-bottom: 1rem;">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+
+            <h1 class="form-title">Connexion</h1>
+            
+            <div class="form-group">
+                <label for="inputEmail">Email</label>
+                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" autocomplete="email" required autofocus>
+            </div>
+            
+            <div class="form-group">
+                <label for="inputPassword">Mot de passe</label>
+                <input type="password" name="password" id="inputPassword" autocomplete="current-password" required>
+            </div>
+
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+            <div class="form-actions" style="flex-direction: column; align-items: stretch;">
+                <button class="btn btn-primary" type="submit">
+                    Se connecter
+                </button>
+                <a href="{{ path('app_guest_login') }}" class="btn btn-secondary mt-4" style="text-align: center;">
+                    Continuer en tant qu'invité
+                </a>
+                <p class="text-center mt-4">
+                    Pas encore de compte ? <a href="{{ path('app_register') }}">S'inscrire</a>
+                </p>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

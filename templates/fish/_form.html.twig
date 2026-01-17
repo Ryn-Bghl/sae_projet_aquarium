@@ -1,4 +1,24 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="form-container">
+    {{ form_start(form) }}
+    
+    {% if form.name is defined %}
+        {{ form_row(form.name) }}
+    {% endif %}
+    
+    {% if form.aquarium is defined %}
+        {{ form_row(form.aquarium) }}
+    {% endif %}
+    
+    {# Render rest #}
+    {% for child in form %}
+        {% if child.vars.name not in ['name', 'aquarium', '_token'] %}
+            {{ form_row(child) }}
+        {% endif %}
+    {% endfor %}
+
+    <div class="form-actions">
+        <a href="{{ path('app_fish_index') }}" class="btn btn-secondary" style="margin-right: auto;">Retour</a>
+        <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+    </div>
+    {{ form_end(form) }}
+</div>

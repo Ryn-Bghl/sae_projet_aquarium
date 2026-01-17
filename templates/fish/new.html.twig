@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Fish{% endblock %}
+{% block title %}Nouveau Poisson{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/forms.css') }}">
+{% endblock %}
 
 {% block body %}
-    <h1>Create new Fish</h1>
-
+    <h1>Ajouter un Poisson</h1>
     {{ include('fish/_form.html.twig') }}
-
-    <a href="{{ path('app_fish_index') }}">back to list</a>
 {% endblock %}

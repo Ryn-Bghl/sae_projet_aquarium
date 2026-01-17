@@ -11,20 +11,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-final class DashboardController extends AbstractController
+final class DashboardController extends BaseController
 {
     #[Route('/', name: 'app_dashboard')]
-    public function index(AquariumRepository $aquariumRepository, UserRepository $userRepository, DataRepository $dataRepository, FishRepository $fishRepository, SettingRepository $setting): Response
+    public function index(AquariumRepository $aquariumRepository, DataRepository $dataRepository, FishRepository $fishRepository, \App\Repository\UserRepository $userRepository, \Doctrine\ORM\EntityManagerInterface $em, \Symfony\Bundle\SecurityBundle\Security $security): Response
     {
+        $this->ensureGuest($userRepository, $em, $security);
+        
         return $this->render('dashboard/index.html.twig', [
             'title' => 'AquaTrack | Dashboard',
-            'controller_name' => 'DashboardController',
             'aquariums' => $aquariumRepository->findAll(),
-            'users' => $userRepository->findAll(),
             'user' => $this->getUser(),
-            'datas' => $dataRepository->findAll(),
+            'datas' => $dataRepository->findBy([], ['createdAt' => 'DESC']),
             'fishes' => $fishRepository->findAll(),
-            'settings' => $setting->findAll(),
         ]);
     }
 }

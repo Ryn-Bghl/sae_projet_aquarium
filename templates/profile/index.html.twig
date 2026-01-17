@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Profil - AquaTrack{% endblock %}
+
+{% block body %}
+    <h1>Mon Profil</h1>
+
+    <div class="card mb-4">
+        <h3>Informations Personnelles</h3>
+        <div class="table-container" style="box-shadow: none; padding: 0;">
+            <table class="table-borderless">
+                <tr>
+                    <th style="width: 200px;">Email</th>
+                    <td>{{ user.email }}</td>
+                </tr>
+                <tr>
+                    <th>Statut</th>
+                    <td>
+                        {% if user.email == 'guest@aquatrack.fr' %}
+                            <span class="badge" style="background: var(--color-accent); color: var(--color-bg-primary); padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">Session Invité</span>
+                        {% else %}
+                            <span class="badge" style="background: var(--color-success); color: var(--color-bg-primary); padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">Compte Membre</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    {% if user.email == 'guest@aquatrack.fr' %}
+    <div class="card mb-4" style="border: 1px solid var(--color-accent);">
+        <h3>Connexion / Inscription</h3>
+        <p>Vous êtes actuellement en mode invité. Vous pouvez consulter les données partagées, mais pour une expérience personnalisée, veuillez vous connecter.</p>
+        <div class="d-flex gap-2 mt-4">
+            <a href="{{ path('app_login') }}" class="btn btn-primary">Se connecter</a>
+            <a href="{{ path('app_register') }}" class="btn btn-secondary">Créer un compte</a>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="card">
+        <h3>Statistiques</h3>
+        <div class="card-grid">
+            <div class="card" style="background: var(--color-bg-tertiary);">
+                <h3>Mes Aquariums</h3>
+                <div class="value">{{ user.aquariums|length }}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-actions mt-4">
+        <a href="{{ path('app_logout') }}" class="btn btn-danger">Déconnexion</a>
+    </div>
+{% endblock %}

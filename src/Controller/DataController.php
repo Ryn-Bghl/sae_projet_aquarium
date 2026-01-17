@@ -12,13 +12,15 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/data')]
-final class DataController extends AbstractController
+final class DataController extends BaseController
 {
     #[Route(name: 'app_data_index', methods: ['GET'])]
-    public function index(DataRepository $dataRepository): Response
+    public function index(DataRepository $dataRepository, \App\Repository\UserRepository $userRepository, \Doctrine\ORM\EntityManagerInterface $em, \Symfony\Bundle\SecurityBundle\Security $security): Response
     {
+        $this->ensureGuest($userRepository, $em, $security);
+        
         return $this->render('data/index.html.twig', [
-            'datas' => $dataRepository->findAll(),
+            'datas' => $dataRepository->findBy([], ['createdAt' => 'DESC']),
             'css_file_path' => 'styles/global.css',
         ]);
     }
@@ -27,7 +29,9 @@ final class DataController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $data = new Data();
-        $form = $this->createForm(DataType::class, $data);
+        $form = $this->createForm(DataType::class, $data, [
+            'user' => $this->getUser(),
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -54,7 +58,9 @@ final class DataController extends AbstractController
     #[Route('/{id}/edit', name: 'app_data_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Data $data, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(DataType::class, $data);
+        $form = $this->createForm(DataType::class, $data, [
+            'user' => $this->getUser(),
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

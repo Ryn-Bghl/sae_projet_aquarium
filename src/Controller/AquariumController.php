@@ -12,13 +12,15 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/aquarium')]
-final class AquariumController extends AbstractController
+final class AquariumController extends BaseController
 {
     #[Route(name: 'app_aquarium_index', methods: ['GET'])]
-    public function index(AquariumRepository $aquariumRepository): Response
+    public function index(AquariumRepository $aquariumRepository, \App\Repository\UserRepository $userRepository, \Doctrine\ORM\EntityManagerInterface $em, \Symfony\Bundle\SecurityBundle\Security $security): Response
     {
+        $this->ensureGuest($userRepository, $em, $security);
+        
         return $this->render('aquarium/index.html.twig', [
-            'aquaria' => $aquariumRepository->findAll(),
+            'aquariums' => $aquariumRepository->findAll(),
             'css_file_path' => 'styles/global.css',
         ]);
     }
@@ -27,6 +29,7 @@ final class AquariumController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $aquarium = new Aquarium();
+        $aquarium->setUser($this->getUser());
         $form = $this->createForm(AquariumType::class, $aquarium);
         $form->handleRequest($request);
 

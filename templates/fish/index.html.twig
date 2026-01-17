@@ -1,35 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Fish index{% endblock %}
+{% block title %}Mes Poissons{% endblock %}
 
 {% block body %}
-    <h1>Fish index</h1>
+    <div class="d-flex justify-between align-center mb-4">
+        <h1>Mes Poissons</h1>
+        <a href="{{ path('app_fish_new') }}" class="btn btn-primary">Ajouter un poisson</a>
+    </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for fish in fish %}
-            <tr>
-                <td>{{ fish.id }}</td>
-                <td>{{ fish.name }}</td>
-                <td>
-                    <a href="{{ path('app_fish_show', {'id': fish.id}) }}">show</a>
-                    <a href="{{ path('app_fish_edit', {'id': fish.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_fish_new') }}">Create new</a>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Aquarium</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for fish in fish %}
+                <tr>
+                    <td>{{ fish.name }}</td>
+                    <td>
+                        {% if fish.aquarium %}
+                            {{ fish.aquarium.name }}
+                        {% else %}
+                            <span class="text-muted">Non assigné</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ path('app_fish_show', {'id': fish.id}) }}" class="btn btn-secondary">Voir</a>
+                        <a href="{{ path('app_fish_edit', {'id': fish.id}) }}" class="btn btn-secondary">Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3" class="text-center">Aucun poisson trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

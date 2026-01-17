@@ -1,4 +1,28 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="form-container">
+    {{ form_start(form) }}
+    
+    {% if form.name is defined %}
+        {{ form_row(form.name) }}
+    {% endif %}
+    
+    {% if form.capacity is defined %}
+        {{ form_row(form.capacity) }}
+    {% endif %}
+    
+    {% if form.type is defined %}
+        {{ form_row(form.type) }}
+    {% endif %}
+
+    {# Render any other fields that might be added later automatically #}
+    {% for child in form %}
+        {% if child.vars.name not in ['name', 'capacity', 'type', '_token'] %}
+            {{ form_row(child) }}
+        {% endif %}
+    {% endfor %}
+
+    <div class="form-actions">
+        <a href="{{ path('app_aquarium_index') }}" class="btn btn-secondary" style="margin-right: auto;">Retour</a>
+        <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+    </div>
+    {{ form_end(form) }}
+</div>

@@ -14,7 +14,8 @@
         {{ form_row(form.aquarium) }}
         
         <div class="form-actions">
-            <button class="btn-primary">{{ button_label|default('Enregistrer') }}</button>
+            <a href="{{ path('app_data_index') }}" class="btn btn-secondary" style="margin-right: auto;">Retour</a>
+            <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
         </div>
     {{ form_end(form) }}
 </div>

@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Nouvelle Saisie
-{% endblock %}
+{% block title %}Nouvelle Mesure{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -9,11 +8,6 @@
 {% endblock %}
 
 {% block body %}
-	<h1 class="form-title">Créer une nouvelle saisie</h1>
-
-	{{ include('data/_form.html.twig') }}
-
-	<div style="margin-top: 1rem; text-align: center;">
-        <a href="{{ path('app_data_index') }}" class="btn-link">Retour à la liste</a>
-    </div>
+    <h1>Saisir une Mesure</h1>
+    {{ include('data/_form.html.twig') }}
 {% endblock %}

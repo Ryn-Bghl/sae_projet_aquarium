@@ -1,58 +1,50 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Index des Saisies
-{% endblock %}
-
-{% block stylesheets %}
-	{{ parent() }}
-	<link rel="stylesheet" href="{{ asset('styles/forms.css') }}">
-	<link rel="stylesheet" href="{{ asset('styles/dashboard.css') }}">
-{% endblock %}
+{% block title %}Saisie de Données{% endblock %}
 
 {% block body %}
-	<h1 class="form-title">Historique des Saisies</h1>
+    <div class="d-flex justify-between align-center mb-4">
+        <h1>Historique des Mesures</h1>
+        <a href="{{ path('app_data_new') }}" class="btn btn-primary">Nouvelle Mesure</a>
+    </div>
 
-	<div style="margin-bottom: 2rem; display: flex; justify-content: flex-end;">
-		<a href="{{ path('app_data_new') }}" class="btn-primary">Nouvelle Saisie</a>
-	</div>
-
-	<table class="table">
-		<thead>
-			<tr>
-				<th>ID</th>
-				<th>Date</th>
-				<th>Aquarium</th>
-				<th>Temp (°C)</th>
-				<th>pH</th>
-				<th>KH</th>
-				<th>GH</th>
-				<th>Cl2</th>
-				<th>NO2</th>
-				<th>NO3</th>
-				<th>Observation</th>
-				<th>Actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for data in datas %}
-				<tr>
-					<td>{{ data.id }}</td>
-					<td>{{ data.createdAt|date('d/m/Y H:i') }}</td>
-					<td>{{ data.aquarium.name }}</td>
-					<td>{{ data.temp }}</td>
-					<td>{{ data.ph }}</td>
-					<td>{{ data.kh }}</td>
-					<td>{{ data.gh }}</td>
-					<td>{{ data.cl2 }}</td>
-					<td>{{ data.no2 }}</td>
-					<td>{{ data.no3 }}</td>
-					<td>{{ data.observation|u.truncate(20, '...') }}</td>
-					<td>
-						<a href="{{ path('app_data_show', {'id': data.id}) }}" class="btn-link">Voir</a>
-						<a href="{{ path('app_data_edit', {'id': data.id}) }}" class="btn-link">Editer</a>
-					</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Aquarium</th>
+                    <th>Temp (°C)</th>
+                    <th>pH</th>
+                    <th>KH</th>
+                    <th>GH</th>
+                    <th>NO2</th>
+                    <th>NO3</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for datum in datas %}
+                <tr>
+                    <td>{{ datum.createdAt ? datum.createdAt|date('d/m/Y H:i') : '' }}</td>
+                    <td>{{ datum.aquarium ? datum.aquarium.name : 'N/A' }}</td>
+                    <td>{{ datum.temp }}</td>
+                    <td>{{ datum.ph }}</td>
+                    <td>{{ datum.kh }}</td>
+                    <td>{{ datum.gh }}</td>
+                    <td>{{ datum.no2 }}</td>
+                    <td>{{ datum.no3 }}</td>
+                    <td>
+                        <a href="{{ path('app_data_show', {'id': datum.id}) }}" class="btn btn-secondary">Voir</a>
+                        <a href="{{ path('app_data_edit', {'id': datum.id}) }}" class="btn btn-secondary">Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="9" class="text-center">Aucune donnée trouvée</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

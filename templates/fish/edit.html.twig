@@ -1,13 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Fish{% endblock %}
+{% block title %}Modifier Poisson{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/forms.css') }}">
+{% endblock %}
 
 {% block body %}
-    <h1>Edit Fish</h1>
-
-    {{ include('fish/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_fish_index') }}">back to list</a>
-
-    {{ include('fish/_delete_form.html.twig') }}
+    <h1>Modifier Poisson</h1>
+    {{ include('fish/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+    
+    <div style="margin-top: 2rem; text-align: right;">
+         {{ include('fish/_delete_form.html.twig') }}
+    </div>
 {% endblock %}

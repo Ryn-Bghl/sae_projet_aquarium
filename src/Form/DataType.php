@@ -9,10 +9,13 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use App\Repository\AquariumRepository;
+
 class DataType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $user = $options['user'];
         $builder
             ->add('createdAt', null, [
                 'widget' => 'single_text'
@@ -36,6 +39,7 @@ class DataType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Data::class,
+            'user' => null,
         ]);
     }
 }
