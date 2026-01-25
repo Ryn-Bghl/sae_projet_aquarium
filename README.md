@@ -1,6 +1,6 @@
 # 🌊 SAE 301/303 – Projet Aquarium
 
-**Département MMI x Département Génie Biologique – 2025-2026**
+## **Département MMI x Département Génie Biologique – 2025-2026**
 
 Application web développée dans le cadre du BUT MMI – SAE 301/303, en collaboration avec les étudiants en Génie Biologique.
 Elle propose un **tableau de bord interactif** pour gérer, saisir et visualiser les données des aquariums pédagogiques.
@@ -14,62 +14,62 @@ L’objectif est de mettre à disposition des étudiants GB un **outil numériqu
 
 ### 🎯 Objectifs
 
-* Centraliser les **données physico-chimiques et biologiques** des aquariums.
-* Suivre et représenter le **cycle de l’azote** :
+- Centraliser les **données physico-chimiques et biologiques** des aquariums.
+- Suivre et représenter le **cycle de l’azote** :
+  - Ammoniaque (NH₃) → Nitrites (NO₂⁻) → Nitrates (NO₃⁻).
 
-  * Ammoniaque (NH₃) → Nitrites (NO₂⁻) → Nitrates (NO₃⁻).
-* Offrir des **estimations et rappels automatiques** :
+- Offrir des **estimations et rappels automatiques** :
+  - cycle de l’azote,
+  - nourriture,
+  - changement d’eau.
 
-  * cycle de l’azote,
-  * nourriture,
-  * changement d’eau.
-* Guider les étudiants dans la **réflexion sur l’aquarium/terrarium** :
+- Guider les étudiants dans la **réflexion sur l’aquarium/terrarium** :
+  - quels animaux ?
+  - quelles plantes ?
+  - quelle eau ?
+  - quel format ?
 
-  * quels animaux ?
-  * quelles plantes ?
-  * quelle eau ?
-  * quel format ?
-* Personnalisation possible (paramètres, thèmes).
+- Personnalisation possible (paramètres, thèmes).
 
 ### 📊 Paramètres suivis
 
-* Température (°C)
-* pH
-* GH (dureté totale → calcium + magnésium)
-* KH (dureté carbonatée → stabilité du pH)
-* Nitrites (NO₂⁻)
-* Chlore (Cl⁻)
-* Carbonates (CO₃²⁻)
+- Température (°C)
+- pH
+- GH (dureté totale → calcium + magnésium)
+- KH (dureté carbonatée → stabilité du pH)
+- Nitrites (NO₂⁻)
+- Chlore (Cl⁻)
+- Carbonates (CO₃²⁻)
 
 ### 📅 Organisation & jalons
 
-* **23 septembre** : rencontre GB–MMI, création du cahier des charges.
-* **24 novembre** : point d’avancement, présentation de l’application et envoi des fichiers de test.
-* **27 janvier** : soutenance finale et vote des étudiants GB pour élire l’application retenue.
+- **23 septembre** : rencontre GB–MMI, création du cahier des charges.
+- **24 novembre** : point d’avancement, présentation de l’application et envoi des fichiers de test.
+- **27 janvier** : soutenance finale et vote des étudiants GB pour élire l’application retenue.
 
 ---
 
 ## 🛠️ Compétences mobilisées
 
-* **Gestion de projet** : planification, suivi, communication.
-* **Développement backend** :
+- **Gestion de projet** : planification, suivi, communication.
+- **Développement backend** :
+  - Symfony (architecture MVC),
+  - Twig,
+  - Doctrine ORM,
+  - Webpack Encore / AssetMapper
 
-  * Symfony (architecture MVC),
-  * Twig,
-  * Doctrine ORM,
-  * Webpack Encore / AssetMapper
-* **Développement frontend** :
+- **Développement frontend** :
+  - HTML5, CSS3, JavaScript,
+  - Responsive design,
+  - Visualisation de données (D3.js).
 
-  * HTML5, CSS3, JavaScript,
-  * Responsive design,
-  * Visualisation de données (D3.js).
-* **UX / Accessibilité** : interface claire, adaptée aux besoins pédagogiques.
+- **UX / Accessibilité** : interface claire, adaptée aux besoins pédagogiques.
 
 ---
 
 ## 📂 Structure du dépôt (Symfony)
 
-``` bash
+```bash
 📦 sae_projet_aquarium
 ┣ 📂 assets/                    # Fichiers frontend (JS, CSS, images)
 ┣ 📂 bin/                       # Scripts console (ex: bin/console)
@@ -92,24 +92,64 @@ L’objectif est de mettre à disposition des étudiants GB un **outil numériqu
 
 ---
 
+## 🚀 Installation et Développement
+
+### 1. Cloner le projet
+
+```bash
+git clone <url-du-depot>
+cd sae_projet_aquarium
+```
+
+### 2. Installer les dépendances
+
+```bash
+composer install
+```
+
+### 3. Initialiser la base de données
+
+Assurez-vous que votre serveur de base de données est lancé, puis exécutez :
+
+```bash
+# Créer la base de données
+php bin/console doctrine:database:create
+
+# Exécuter les migrations
+php bin/console doctrine:migrations:migrate --no-interaction
+
+# Charger les données de test (Fixtures)
+php bin/console doctrine:fixtures:load --no-interaction
+```
+
+### 4. Lancer le serveur de développement
+
+```bash
+symfony serve
+# ou
+php -S localhost:8000 -t public
+```
+
+---
+
 ## 🗂️ Livrables attendus
 
-* Cahier des charges.
-* Maquettes et prototypes.
-* Structure de la base de données.
-* Application web fonctionnelle (hébergée sur les serveurs du département).
-* Rapport explicatif du travail réalisé.
+- Cahier des charges.
+- Maquettes et prototypes.
+- Structure de la base de données.
+- Application web fonctionnelle (hébergée sur les serveurs du département).
+- Rapport explicatif du travail réalisé.
 
 ---
 
 ## 🛣️ Roadmap du projet
 
-* **Phase 1 (septembre)** : Rencontre avec GB, définition du cahier des charges.
-* **Phase 2 (octobre)** : Conception (maquettes, structure BDD, choix techniques).
-* **Phase 3 (novembre)** : Développement initial + point d’avancement avec GB.
-* **Phase 4 (décembre)** : Ajout des fonctionnalités avancées (visualisations, rappels).
-* **Phase 5 (janvier)** : Finalisation, tests avec données réelles, déploiement.
-* **Phase 6 (27 janvier)** : Soutenance et présentation finale.
+- **Phase 1 (septembre)** : Rencontre avec GB, définition du cahier des charges.
+- **Phase 2 (octobre)** : Conception (maquettes, structure BDD, choix techniques).
+- **Phase 3 (novembre)** : Développement initial + point d’avancement avec GB.
+- **Phase 4 (décembre)** : Ajout des fonctionnalités avancées (visualisations, rappels).
+- **Phase 5 (janvier)** : Finalisation, tests avec données réelles, déploiement.
+- **Phase 6 (27 janvier)** : Soutenance et présentation finale.
 
 ---
 
