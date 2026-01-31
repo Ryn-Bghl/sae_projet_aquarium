@@ -86,15 +86,15 @@ class AppFixtures extends Fixture
                 $manager->persist($fish);
             }
 
-            // Create Data History (last 7 days)
+            // Create Data History (last 12 weeks)
             $params = $tankData['params'];
-            for ($i = 7; $i >= 0; $i--) { 
-                // Generate a measurement every day
+            for ($i = 12; $i >= 0; $i--) {
+                // Generate a measurement every week
                 $data = new Data();
                 $data->setAquarium($aquarium);
                 
                 // Date logic
-                $date = new \DateTimeImmutable("-{$i} days");
+                $date = new \DateTimeImmutable("-{$i} weeks");
                 // Randomize time a bit
                 $hour = rand(8, 20);
                 $min = rand(0, 59);
