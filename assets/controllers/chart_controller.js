@@ -83,8 +83,17 @@ export default class extends Controller {
         // Add X Axis
         svg.append("g")
             .attr("transform", `translate(0,${height})`)
-            .call(d3.axisBottom(x).ticks(5))
-            .style("color", "#a0a0a0");
+            .call(
+                d3.axisBottom(x)
+                    .tickValues(data.map(d => new Date(d.date))) // Show a tick for every data point
+                    .tickFormat(d3.timeFormat("%d/%m"))
+            )
+            .style("color", "#a0a0a0")
+            .selectAll("text")
+                .style("text-anchor", "end")
+                .attr("dx", "-.8em")
+                .attr("dy", ".15em")
+                .attr("transform", "rotate(-45)");
 
         // Add Y Axis
         svg.append("g").call(d3.axisLeft(y)).style("color", "#a0a0a0");
