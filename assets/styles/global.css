@@ -376,3 +376,21 @@ input:focus, textarea:focus, select:focus {
         grid-template-columns: 1fr;
     }
 }
+
+/* Tooltip */
+.chart-tooltip {
+    position: absolute;
+    text-align: center;
+    padding: 8px;
+    font-size: 0.8rem;
+    background: var(--color-bg-tertiary);
+    color: var(--color-text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.1s;
+    box-shadow: var(--shadow-md);
+    z-index: 10;
+    transform: translateX(-50%); /* Center horizontally relative to its position */
+}

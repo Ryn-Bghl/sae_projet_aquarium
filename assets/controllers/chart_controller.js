@@ -33,8 +33,17 @@ export default class extends Controller {
         const data = this.dataValue;
         const container = this.containerTarget;
 
+        // Ensure container can host absolute tooltip
+        container.style.position = "relative";
+
         // Clear previous chart
         container.innerHTML = "";
+        
+        // Tooltip Element
+        const tooltip = d3.select(container)
+            .append("div")
+            .attr("class", "chart-tooltip")
+            .style("opacity", 0);
 
         // Dimensions
         const margin = { top: 20, right: 30, bottom: 30, left: 40 };
@@ -58,9 +67,8 @@ export default class extends Controller {
             .attr("transform", `translate(${margin.left},${margin.top})`);
 
         // Scales
-        // Assuming data is array of objects { date: "...", value: ... }
-        // Parse dates if necessary, currently assuming ISO strings or timestamps that D3 can handle or we pre-process
-        const parseDate = d3.timeParse("%Y-%m-%d %H:%M:%S"); // Adapt to your format
+        // Ensure data is sorted by date for bisector to work
+        data.sort((a, b) => new Date(a.date) - new Date(b.date));
 
         const x = d3
             .scaleTime()
@@ -116,5 +124,62 @@ export default class extends Controller {
             .attr("cy", (d) => y(d.value))
             .attr("r", 4)
             .attr("fill", this.colorValue || "#00bcd4");
+
+        // --- Tooltip Logic ---
+        
+        // Focus Circle (the highlighted point)
+        const focus = svg.append("g")
+            .append("circle")
+            .style("fill", this.colorValue || "#00bcd4")
+            .attr("stroke", "white")
+            .attr("stroke-width", 2)
+            .attr("r", 6)
+            .style("opacity", 0);
+
+        // Overlay for catching mouse events
+        svg.append("rect")
+            .attr("width", width)
+            .attr("height", height)
+            .style("fill", "none")
+            .style("pointer-events", "all")
+            .on("pointerenter", () => {
+                focus.style("opacity", 1);
+                tooltip.style("opacity", 1);
+            })
+            .on("pointerleave", () => {
+                focus.style("opacity", 0);
+                tooltip.style("opacity", 0);
+            })
+            .on("pointermove", (event) => {
+                // Find nearest data point
+                const bisect = d3.bisector((d) => new Date(d.date)).left;
+                const [mX, mY] = d3.pointer(event);
+                const x0 = x.invert(mX);
+                const i = bisect(data, x0, 1);
+                const d0 = data[i - 1];
+                const d1 = data[i];
+                // Handle edge cases where i might be out of bounds
+                let d = d0; 
+                if (d1 && d0) {
+                    d = x0 - new Date(d0.date) > new Date(d1.date) - x0 ? d1 : d0;
+                } else if (d1) {
+                    d = d1;
+                }
+                
+                if (!d) return;
+
+                // Update focus position (stays on the line)
+                focus
+                    .attr("cx", x(new Date(d.date)))
+                    .attr("cy", y(d.value));
+
+                // Position tooltip exactly under the mouse
+                const [contX, contY] = d3.pointer(event, container);
+                const formatDate = d3.timeFormat("%d/%m/%Y");
+                tooltip
+                    .html(`<strong>${formatDate(new Date(d.date))}</strong><br>Val: ${d.value}`)
+                    .style("left", contX + "px")
+                    .style("top", (contY + 20) + "px");
+            });
     }
 }
