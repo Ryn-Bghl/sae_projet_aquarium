@@ -14,6 +14,18 @@ export default class extends Controller {
         console.log("Chart controller connected");
         if (this.hasDataValue) {
             this.renderChart();
+            
+            // Add resize observer to make it responsive
+            this.resizeObserver = new ResizeObserver(() => {
+                this.renderChart();
+            });
+            this.resizeObserver.observe(this.containerTarget);
+        }
+    }
+
+    disconnect() {
+        if (this.resizeObserver) {
+            this.resizeObserver.disconnect();
         }
     }
 
@@ -26,8 +38,15 @@ export default class extends Controller {
 
         // Dimensions
         const margin = { top: 20, right: 30, bottom: 30, left: 40 };
-        const width = container.clientWidth - margin.left - margin.right;
-        const height = 300 - margin.top - margin.bottom;
+        // Use container dimensions
+        const containerWidth = container.clientWidth || 600;
+        const containerHeight = container.clientHeight || 300;
+        
+        const width = containerWidth - margin.left - margin.right;
+        const height = containerHeight - margin.top - margin.bottom;
+
+        // Prevent negative dimensions if container is hidden/collapsed
+        if (width <= 0 || height <= 0) return;
 
         // SVG
         const svg = d3
