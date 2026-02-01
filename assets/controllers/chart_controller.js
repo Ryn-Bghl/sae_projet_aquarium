@@ -6,6 +6,7 @@ export default class extends Controller {
         data: Array,
         label: String,
         color: String,
+        thresholds: Object,
     };
 
     static targets = ["container"];
@@ -75,9 +76,22 @@ export default class extends Controller {
             .domain(d3.extent(data, (d) => new Date(d.date)))
             .range([0, width]);
 
+        const yDomain = d3.extent(data, (d) => d.value);
+        if (this.hasThresholdsValue) {
+            const { min, max } = this.thresholdsValue;
+            // Expand domain to include thresholds with a bit of padding
+            yDomain[0] = Math.min(yDomain[0], min);
+            yDomain[1] = Math.max(yDomain[1], max);
+            
+            // Add 10% padding
+            const padding = (yDomain[1] - yDomain[0]) * 0.1 || 1;
+            yDomain[0] -= padding;
+            yDomain[1] += padding;
+        }
+
         const y = d3
             .scaleLinear()
-            .domain(d3.extent(data, (d) => d.value)) // Use extent to focus on value range
+            .domain(yDomain)
             .nice()
             .range([height, 0]);
 
@@ -106,11 +120,41 @@ export default class extends Controller {
         // Add Y Axis
         svg.append("g").call(d3.axisLeft(y)).style("color", "#a0a0a0");
 
+        // Define stroke color and potential gradient
+        let strokeColor = this.colorValue || "#00bcd4";
+        if (this.hasThresholdsValue) {
+            const { min, max } = this.thresholdsValue;
+            const gradientId = `line-gradient-${Math.random().toString(36).substr(2, 9)}`;
+            
+            const defs = svg.append("defs");
+            const gradient = defs.append("linearGradient")
+                .attr("id", gradientId)
+                .attr("gradientUnits", "userSpaceOnUse")
+                .attr("x1", 0)
+                .attr("y1", height)
+                .attr("x2", 0)
+                .attr("y2", 0);
+
+            // Calculate offsets (0 is bottom, 1 is top)
+            // y(min) and y(max) are pixel values from top
+            const offsetMin = Math.max(0, Math.min(1, (height - y(min)) / height));
+            const offsetMax = Math.max(0, Math.min(1, (height - y(max)) / height));
+
+            gradient.append("stop").attr("offset", 0).attr("stop-color", "#ef5350"); // Red (too low)
+            gradient.append("stop").attr("offset", offsetMin).attr("stop-color", "#ef5350");
+            gradient.append("stop").attr("offset", offsetMin).attr("stop-color", "#66bb6a"); // Green (optimal)
+            gradient.append("stop").attr("offset", offsetMax).attr("stop-color", "#66bb6a");
+            gradient.append("stop").attr("offset", offsetMax).attr("stop-color", "#ef5350"); // Red (too high)
+            gradient.append("stop").attr("offset", 1).attr("stop-color", "#ef5350");
+
+            strokeColor = `url(#${gradientId})`;
+        }
+
         // Add Path
         svg.append("path")
             .datum(data)
             .attr("fill", "none")
-            .attr("stroke", this.colorValue || "#00bcd4")
+            .attr("stroke", strokeColor)
             .attr("stroke-width", 2)
             .attr("d", line);
 
@@ -123,7 +167,13 @@ export default class extends Controller {
             .attr("cx", (d) => x(new Date(d.date)))
             .attr("cy", (d) => y(d.value))
             .attr("r", 4)
-            .attr("fill", this.colorValue || "#00bcd4");
+            .attr("fill", (d) => {
+                if (this.hasThresholdsValue) {
+                    const { min, max } = this.thresholdsValue;
+                    return (d.value >= min && d.value <= max) ? "#66bb6a" : "#ef5350";
+                }
+                return this.colorValue || "#00bcd4";
+            });
 
         // --- Tooltip Logic ---
         
@@ -172,6 +222,11 @@ export default class extends Controller {
                 focus
                     .attr("cx", x(new Date(d.date)))
                     .attr("cy", y(d.value));
+
+                if (this.hasThresholdsValue) {
+                    const { min, max } = this.thresholdsValue;
+                    focus.style("fill", (d.value >= min && d.value <= max) ? "#66bb6a" : "#ef5350");
+                }
 
                 // Position tooltip exactly under the mouse
                 const [contX, contY] = d3.pointer(event, container);
