@@ -77,7 +77,7 @@ export default class extends Controller {
 
         const y = d3
             .scaleLinear()
-            .domain([0, d3.max(data, (d) => d.value)])
+            .domain(d3.extent(data, (d) => d.value)) // Use extent to focus on value range
             .nice()
             .range([height, 0]);
 
