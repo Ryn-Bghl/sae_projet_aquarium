@@ -56,7 +56,7 @@ L’objectif est de mettre à disposition des étudiants GB un **outil numériqu
   - Symfony (architecture MVC),
   - Twig,
   - Doctrine ORM,
-  - Webpack Encore / AssetMapper
+  - AssetMapper / Stimulus / Turbo
 
 - **Développement frontend** :
   - HTML5, CSS3, JavaScript,
@@ -109,7 +109,13 @@ composer install
 
 ### 3. Initialiser la base de données
 
-Assurez-vous que votre serveur de base de données est lancé, puis exécutez :
+Si vous avez Docker installé, vous pouvez lancer le serveur de base de données avec :
+
+```bash
+docker-compose -f compose.yaml -f compose.override.yaml up -d
+```
+
+Sinon, assurez-vous que votre serveur de base de données est lancé, puis exécutez :
 
 ```bash
 # Créer la base de données
