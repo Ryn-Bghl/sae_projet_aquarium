@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/data')]
@@ -23,6 +24,47 @@ final class DataController extends BaseController
             'datas' => $dataRepository->findBy([], ['createdAt' => 'DESC']),
             'css_file_path' => 'styles/global.css',
         ]);
+    }
+
+    #[Route('/export', name: 'app_data_export', methods: ['GET'])]
+    public function export(DataRepository $dataRepository): Response
+    {
+        $datas = $dataRepository->findBy([], ['createdAt' => 'DESC']);
+
+        $response = new StreamedResponse(function () use ($datas) {
+            $handle = fopen('php://output', 'w+');
+            
+            // Add BOM for Excel UTF-8 support
+            fprintf($handle, chr(0xEF).chr(0xBB).chr(0xBF));
+
+            // Header
+            fputcsv($handle, [
+                'Date', 'Aquarium', 'Temp (°C)', 'pH', 'KH', 'GH', 'Cl2', 'NO2', 'NO3', 'Observations', 'Créé par'
+            ], ';');
+
+            foreach ($datas as $data) {
+                fputcsv($handle, [
+                    $data->getCreatedAt()?->format('d/m/Y H:i'),
+                    $data->getAquarium()?->getName(),
+                    $data->getTemp(),
+                    $data->getPh(),
+                    $data->getKh(),
+                    $data->getGh(),
+                    $data->getCl2(),
+                    $data->getNo2(),
+                    $data->getNo3(),
+                    $data->getObservation(),
+                    $data->getCreatedBy()?->getEmail(),
+                ], ';');
+            }
+
+            fclose($handle);
+        });
+
+        $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
+        $response->headers->set('Content-Disposition', 'attachment; filename="export_donnees_'.date('Ymd_His').'.csv"');
+
+        return $response;
     }
 
     #[Route('/new', name: 'app_data_new', methods: ['GET', 'POST'])]

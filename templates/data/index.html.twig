@@ -5,7 +5,10 @@
 {% block body %}
     <div class="d-flex justify-between align-center mb-4">
         <h1>Historique des Mesures</h1>
-        <a href="{{ path('app_data_new') }}" class="btn btn-primary">Nouvelle Mesure</a>
+        <div>
+            <a href="{{ path('app_data_export') }}" class="btn btn-secondary">Exporter CSV</a>
+            <a href="{{ path('app_data_new') }}" class="btn btn-primary">Nouvelle Mesure</a>
+        </div>
     </div>
 
     <div class="table-container">
