@@ -17,7 +17,7 @@ final class DashboardController extends BaseController
     public function index(AquariumRepository $aquariumRepository, DataRepository $dataRepository, FishRepository $fishRepository, \App\Repository\UserRepository $userRepository, \Doctrine\ORM\EntityManagerInterface $em, \Symfony\Bundle\SecurityBundle\Security $security): Response
     {
         $this->ensureGuest($userRepository, $em, $security);
-        
+
         return $this->render('dashboard/index.html.twig', [
             'title' => 'AquaTrack | Dashboard',
             'aquariums' => $aquariumRepository->findAll(),
