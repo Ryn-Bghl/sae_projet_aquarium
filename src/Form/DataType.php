@@ -17,9 +17,9 @@ class DataType extends AbstractType
     {
         $user = $options['user'];
         $builder
-            ->add('createdAt', null, [
-                'widget' => 'single_text'
-            ])
+            // ->add('createdAt', null, [ // Removed: This field is managed automatically by the entity listener
+            //     'widget' => 'single_text'
+            // ])
             ->add('aquarium', EntityType::class,  [
                 'class' => Aquarium::class,
                 'choice_label' => 'name',

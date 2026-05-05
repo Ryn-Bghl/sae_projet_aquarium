@@ -4,8 +4,10 @@ namespace App\Entity;
 
 use App\Repository\DataRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: DataRepository::class)]
+#[ORM\HasLifecycleCallbacks] // Enable lifecycle callbacks for this entity
 class Data
 {
     #[ORM\Id]
@@ -16,9 +18,20 @@ class Data
     #[ORM\Column(nullable: false)]
     private \DateTimeImmutable $createdAt;
 
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
+
     #[ORM\ManyToOne(targetEntity: Aquarium::class)]
     #[ORM\JoinColumn(nullable: false)]
     private $aquarium;
+
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $createdBy = null;
+
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?User $updatedBy = null;
 
     #[ORM\Column(nullable: false)]
     private float $temp = 26.0;
@@ -44,6 +57,20 @@ class Data
     #[ORM\Column(nullable: false)]
     private string $observation = '';
 
+    // Lifecycle Callbacks
+    #[ORM\PrePersist]
+    public function setCreatedAtValue(): void
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
+
+    #[ORM\PreUpdate]
+    public function setUpdatedAtValue(): void
+    {
+        $this->updatedAt = new \DateTimeImmutable();
+    }
+
+    // Getters and Setters (existing and new)
     public function getObservation(): ?string
     {
         return $this->observation;
@@ -145,6 +172,18 @@ class Data
         return $this;
     }
 
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
     public function getAquarium(): ?Aquarium
     {
         return $this->aquarium;
@@ -153,6 +192,30 @@ class Data
     public function setAquarium(?Aquarium $aquarium): static
     {
         $this->aquarium = $aquarium;
+
+        return $this;
+    }
+
+    public function getCreatedBy(): ?User
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(?User $createdBy): static
+    {
+        $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
+    public function getUpdatedBy(): ?User
+    {
+        return $this->updatedBy;
+    }
+
+    public function setUpdatedBy(?User $updatedBy): static
+    {
+        $this->updatedBy = $updatedBy;
 
         return $this;
     }

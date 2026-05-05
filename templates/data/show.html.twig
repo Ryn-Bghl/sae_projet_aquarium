@@ -40,6 +40,16 @@
                     <th>NO3</th><td>{{ data.no3 }} mg/L</td>
                     <th>Aquarium</th><td>{{ data.aquarium.name }}</td>
                 </tr>
+                <tr>
+                    <th>Créé par</th><td>{{ data.createdBy ? data.createdBy.email : 'N/A' }}</td>
+                    <th>Créé le</th><td>{{ data.createdAt ? data.createdAt|date('d/m/Y H:i') : 'N/A' }}</td>
+                </tr>
+                {% if data.updatedBy %}
+                <tr>
+                    <th>Modifié par</th><td>{{ data.updatedBy ? data.updatedBy.email : 'N/A' }}</td>
+                    <th>Modifié le</th><td>{{ data.updatedAt ? data.updatedAt|date('d/m/Y H:i') : 'N/A' }}</td>
+                </tr>
+                {% endif %}
             </table>
         </div>
     </div>

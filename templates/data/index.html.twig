@@ -20,6 +20,8 @@
                     <th>GH</th>
                     <th>NO2</th>
                     <th>NO3</th>
+                    <th>Créé par</th>
+                    <th>Modifié le</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -34,6 +36,8 @@
                     <td>{{ datum.gh }}</td>
                     <td>{{ datum.no2 }}</td>
                     <td>{{ datum.no3 }}</td>
+                    <td>{{ datum.createdBy ? datum.createdBy.email : 'N/A' }}</td>
+                    <td>{{ datum.updatedAt ? datum.updatedAt|date('d/m/Y H:i') : 'N/A' }}</td>
                     <td>
                         <a href="{{ path('app_data_show', {'id': datum.id}) }}" class="btn btn-secondary">Voir</a>
                         <a href="{{ path('app_data_edit', {'id': datum.id}) }}" class="btn btn-secondary">Modifier</a>
@@ -41,7 +45,7 @@
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="9" class="text-center">Aucune donnée trouvée</td>
+                    <td colspan="11" class="text-center">Aucune donnée trouvée</td>
                 </tr>
             {% endfor %}
             </tbody>
