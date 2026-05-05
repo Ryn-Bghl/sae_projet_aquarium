@@ -170,6 +170,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->settings;
     }
 
+    public function getTheme(): string
+    {
+        if ($this->settings->isEmpty()) {
+            return 'light'; // Default theme if no settings exist
+        }
+
+        // Assuming a user has only one Setting entity for now
+        $setting = $this->settings->first();
+        if ($setting && isset($setting->getSettings()['theme'])) {
+            return $setting->getSettings()['theme'];
+        }
+
+        return 'light'; // Default theme if theme is not set in settings
+    }
+
     public function addSetting(Setting $setting): static
     {
         if (!$this->settings->contains($setting)) {

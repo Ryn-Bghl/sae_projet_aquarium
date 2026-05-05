@@ -5,6 +5,12 @@
 {% block body %}
     <h1>Mon Profil</h1>
 
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
     <div class="card mb-4">
         <h3>Informations Personnelles</h3>
         <div class="table-container" style="box-shadow: none; padding: 0;">
@@ -37,6 +43,14 @@
         </div>
     </div>
     {% endif %}
+
+    <div class="card mb-4">
+        <h3>Préférences de Thème</h3>
+        {{ form_start(settingForm) }}
+        {{ form_row(settingForm.theme) }}
+        <button type="submit" class="btn btn-primary mt-3">Sauvegarder les préférences</button>
+        {{ form_end(settingForm) }}
+    </div>
 
     <div class="card">
         <h3>Statistiques</h3>

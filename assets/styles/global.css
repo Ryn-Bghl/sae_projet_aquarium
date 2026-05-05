@@ -1,20 +1,20 @@
 :root {
-    /* "Earth & Nature" Theme - High Contrast Mid-Dark */
-    --color-bg-primary: #1E1C1A;   /* Darker Warm Brown/Black */
-    --color-bg-secondary: #2B2825; /* Lighter Warm Brown for cards */
-    --color-bg-tertiary: #3A3733;  /* Highlight state */
+    /* Light Theme (Default - Earth & Nature inspired) */
+    --color-bg-primary: #F5F2ED;   /* Very light warm beige */
+    --color-bg-secondary: #FFFFFF; /* White */
+    --color-bg-tertiary: #E8E5DF;  /* Light grey-beige for hover/active */
     
-    --color-text-primary: #FFFFFF;   /* Pure white for maximum contrast */
-    --color-text-secondary: #C5D1A5; /* Brightened Moss Green for better visibility */
-    --color-text-muted: #B0ADA9;     /* Brighter muted text */
+    --color-text-primary: #3C3935;   /* Dark warm grey */
+    --color-text-secondary: #6A6763; /* Medium warm grey */
+    --color-text-muted: #9C9995;     /* Muted warm grey */
 
-    --color-accent: #FF5722;       /* Brightened Deep Orange */
-    --color-accent-hover: #FF7043; 
-    --color-danger: #FF5252;
-    --color-success: #69F0AE;
+    --color-accent: #FF8844;       /* Lighter, vibrant orange */
+    --color-accent-hover: #FF7733; 
+    --color-danger: #D84A4A;
+    --color-success: #6CB652;
     --color-warning: #FFD740;
 
-    --border-color: #4A4642;       /* More distinct border */
+    --border-color: #D3D0CB;       /* Light warm grey border */
     
     /* Spacing */
     --spacing-xs: 0.25rem;
@@ -32,11 +32,30 @@
 
     /* Components */
     --border-radius: 8px;
-    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.4);
-    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.5);
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.12);
     
     --sidebar-width: 250px;
     --header-height: 64px;
+}
+
+/* Dark Theme Overrides */
+[data-theme='dark'] {
+    --color-bg-primary: #1E1C1A;   /* Darker Warm Brown/Black */
+    --color-bg-secondary: #2B2825; /* Lighter Warm Brown for cards */
+    --color-bg-tertiary: #3A3733;  /* Highlight state */
+    
+    --color-text-primary: #FFFFFF;   /* Pure white for maximum contrast */
+    --color-text-secondary: #C5D1A5; /* Brightened Moss Green for better visibility */
+    --color-text-muted: #B0ADA9;     /* Brighter muted text */
+
+    --color-accent: #FF5722;       /* Brightened Deep Orange */
+    --color-accent-hover: #FF7043; 
+    --color-danger: #FF5252;
+    --color-success: #69F0AE;
+    --color-warning: #FFD740;
+
+    --border-color: #4A4642;       /* More distinct border */
 }
 
 /* Reset & Base */
@@ -192,7 +211,7 @@ th {
     font-weight: 700;
     text-transform: uppercase;
     font-size: var(--font-size-sm);
-    background-color: rgba(0,0,0,0.1);
+    background-color: var(--color-bg-tertiary); /* Use theme variable */
 }
 
 tr:hover {
@@ -217,13 +236,13 @@ tr:hover {
 
 .btn-primary {
     background-color: var(--color-accent);
-    color: white !important;
+    color: var(--color-text-primary) !important; /* Ensure text color changes with theme */
 }
 
 .btn-primary:hover {
     background-color: var(--color-accent-hover);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(255, 87, 34, 0.4);
+    box-shadow: 0 4px 12px var(--shadow-md); /* Use theme shadow variable */
 }
 
 .btn-secondary {
@@ -239,7 +258,7 @@ tr:hover {
 
 .btn-danger {
     background-color: var(--color-danger);
-    color: white !important;
+    color: var(--color-text-primary) !important; /* Ensure text color changes with theme */
 }
 
 .btn-danger:hover {
@@ -277,7 +296,7 @@ select {
 input:focus, textarea:focus, select:focus {
     outline: none;
     border-color: var(--color-accent);
-    box-shadow: 0 0 0 3px rgba(255, 87, 34, 0.2);
+    box-shadow: 0 0 0 3px var(--shadow-sm); /* Use theme shadow variable */
 }
 
 /* Cards (Dashboard) */
