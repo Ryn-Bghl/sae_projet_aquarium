@@ -4,8 +4,69 @@
 
 {% block body %}
     <h1>Rapports et Analyses</h1>
-    <div class="card">
-        <p>Cette section est en cours de construction.</p>
-        <p>Ici, vous pourrez bientôt visualiser des rapports détaillés sur la qualité de l'eau et la santé de vos poissons.</p>
-    </div>
+
+    {% if summary.count is defined and summary.count > 0 %}
+        <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+            <div class="card">
+                <h3>Qualité de l'eau</h3>
+                <div class="value">{{ summary.water_quality_status }}</div>
+                <div class="text-muted">Score: {{ summary.water_quality_score|round(2) }} / 100</div>
+            </div>
+            <div class="card">
+                <h3>Données enregistrées</h3>
+                <div class="value">{{ summary.count }}</div> {# Correctly displays the data count #}
+                <div class="text-muted">Mesures récentes</div>
+            </div>
+            <div class="card">
+                <h3>Température Moyenne</h3>
+                <div class="value">{{ summary.average_temp|round(2) }} °C</div>
+                <div class="text-muted">
+                    Min: {{ ideal_ranges.temp.min }}°C - Max: {{ ideal_ranges.temp.max }}°C
+                </div>
+            </div>
+            <div class="card">
+                <h3>pH Moyen</h3>
+                <div class="value">{{ summary.average_ph|round(2) }}</div>
+                <div class="text-muted">
+                    Min: {{ ideal_ranges.ph.min }} - Max: {{ ideal_ranges.ph.max }}
+                </div>
+            </div>
+            {# Add more average cards as needed for other parameters #}
+        </div>
+
+        {# Placeholder for Charts - integration with chart_controller.js would go here #}
+        <div class="card">
+            <h2>Tendances des Paramètres</h2>
+            <p>Les graphiques ci-dessous montrent les tendances des dernières mesures.</p>
+            
+            {# Example for Temperature Chart - would need actual chart implementation #}
+            <div class="chart-container" style="margin-top: var(--spacing-lg);">
+                <h3 style="font-size: 1.1rem; color: var(--color-text-secondary); margin-bottom: var(--spacing-md);">Température</h3>
+                <div data-controller="chart" 
+                     data-chart-color-value="#FFB74D" 
+                     data-chart-thresholds-value='{"min": {{ ideal_ranges.temp.min }}, "max": {{ ideal_ranges.temp.max }}}' 
+                     data-chart-data-value='{{ summary.chart_data|json_encode }}'>
+                    <div data-chart-target="container" style="width: 100%; height: 250px;"></div>
+                </div>
+            </div>
+
+            <div class="chart-container" style="margin-top: var(--spacing-lg);">
+                <h3 style="font-size: 1.1rem; color: var(--color-text-secondary); margin-bottom: var(--spacing-md);">pH</h3>
+                <div data-controller="chart" 
+                     data-chart-color-value="#00BCD4" 
+                     data-chart-thresholds-value='{"min": {{ ideal_ranges.ph.min }}, "max": {{ ideal_ranges.ph.max }}}' 
+                     data-chart-data-value='{{ summary.chart_data|json_encode }}'>
+                    <div data-chart-target="container" style="width: 100%; height: 250px;"></div>
+                </div>
+            </div>
+
+             {# Add more chart containers for other parameters if needed #}
+
+        </div>
+
+    {% else %}
+        <div class="card">
+            <p>Aucune donnée disponible pour générer des rapports.</p>
+        </div>
+    {% endif %}
 {% endblock %}
